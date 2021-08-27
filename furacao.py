@@ -19,11 +19,12 @@ file = open(filename, 'r', encoding='latin1')
 # ----------
 
 # Definições
-
 # Side 0 : 0 - Horizontal inferior
 # Side 0 : 1 - Vertical esquerda
+# Side 0 : 2 - 
 # Side 0 : 3 - Vertical direita
-# Side 0 : 5 - Horizontal superior
+# Side 0 : 4 - 
+# Side 0 : 5 - Frontal
 
 cabecotes = [i + 1 for i in range(nro_cabecotes)]
 
@@ -151,6 +152,45 @@ print(table)
 # ----------
 
 
+# Ordenar por side
+furos.sort(key=lambda furo: furo.side)
+
+# Agrupar por side
+groups = defaultdict(list)
+for obj in furos:
+    groups[obj.side].append(obj)
+furos = list(groups.values())
+
+# Ordenar por X
+
+for array in furos:
+    groups = defaultdict(list)
+    for obj in array:
+        groups[obj.x].append(obj)
+    array = list(groups.values())
+    print (array)
+    
+furos = list(groups.values())
+
+
+# Agrupar por X
+# groups = defaultdict(list)
+# for obj in furos:
+#     groups[obj.side].append(obj)
+# new_list = list(groups.values())
+
+
+# print(new_list[1][0].side)
+data = PrettyTable()
+data.title = filename
+data.field_names = ["Side", "CRN", "X", "Y", "Z", "DP", "Diametro", "P", "Broca"]
+
+for i in furos:
+	# data.add_row(list(furos[i].values))
+	data.add_row(list(i.__dict__.values()))
+
+print(data)
+# furos.map(key=lambda furo: furo.x)
 
 
 
@@ -173,11 +213,9 @@ from itertools import groupby
 lki = [["A",0], ["B",1], ["C",0], ["D",2], ["E",2]]
 lki.sort(key=itemgetter(1))
 
-# furos.sort(key=itemgetter(1))
-
-print(lki)
+# print(lki)
 # print(furos)
 glo = [[x for x,y in g]
        for k,g in  groupby(lki,key=itemgetter(1))]
 
-print(glo)
+# print(glo)
